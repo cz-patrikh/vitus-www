@@ -3,10 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <!-- DOPLNIT: Aktualizovat popis souboru a město -->
-  <meta name="description" content="Ochotnické divadlo Vitus — soubor z [Město]. Naše hry, soubor, fotogalerie a kontakt.">
+  <meta name="description" content="Ochotnické divadlo Vitus — soubor ze Syrovic. Naše hry, soubor, fotogalerie a kontakt.">
   <meta property="og:title" content="Divadlo Vitus">
-  <meta property="og:description" content="Ochotnický divadelní soubor z [Město]">
+  <meta property="og:description" content="Ochotnický divadelní soubor ze Syrovic">
   <!-- DOPLNIT: <meta property="og:image" content="images/hero/hlavni-foto.webp"> -->
   <title>Divadlo Vitus</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -27,6 +26,7 @@
       </button>
       <ul class="nav-menu" id="nav-menu" role="list">
         <li><a href="#uvod">Úvod</a></li>
+        <li><a href="#program">Program</a></li>
         <li><a href="#repertuar">Naše hry</a></li>
         <li><a href="#soubor">Soubor</a></li>
         <li><a href="#galerie">Galerie</a></li>
@@ -39,22 +39,31 @@
 
     <!-- ===================== ÚVOD ===================== -->
     <section id="uvod" class="section-hero">
-      <div class="hero-bg">
-        <!-- DOPLNIT: Nahradit gradient skutečnou fotografií:
-          <img src="images/hero/hlavni-foto.webp" alt="" role="presentation" loading="eager">
-        -->
-      </div>
+      <div class="hero-bg" aria-hidden="true"></div>
       <div class="hero-overlay"></div>
       <div class="hero-content">
         <div class="hero-logo-box">
           <img src="images/logo.jpg" alt="Logo divadla Vitus">
         </div>
         <p class="hero-eyebrow">Divadelní soubor</p>
-        <!-- DOPLNIT: Název souboru a město -->
         <h1 class="hero-title">Vitus</h1>
         <p class="hero-subtitle">Z&nbsp;lásky k&nbsp;divadlu — Syrovice</p>
         <p class="hero-coming-soon">Stránky se připravují&hellip;</p>
-        <a href="#repertuar" class="btn-primary">Naše hry</a>
+        <div class="hero-actions">
+          <a href="#program" class="btn-primary">Termíny a vstupenky</a>
+          <a href="#repertuar" class="hero-secondary">Prohlédnout naše hry <span aria-hidden="true">↓</span></a>
+        </div>
+      </div>
+    </section>
+
+    <section id="program" class="section-program" aria-labelledby="program-title">
+      <div class="container program-content">
+        <div>
+          <h2 id="program-title">Chystáte se do divadla?</h2>
+          <!-- DOPLNIT: Potvrzené termíny, místo konání a odkaz na rezervaci. -->
+          <p>Pro informace o nejbližších představeních a vstupenkách nám napište.</p>
+        </div>
+        <a href="mailto:divadlovitus@seznam.cz?subject=Term%C3%ADny%20a%20vstupenky" class="btn-primary">Zeptat se na termíny</a>
       </div>
     </section>
 
@@ -64,7 +73,7 @@
         <div class="about-content">
           <h2 class="section-title">O&nbsp;nás</h2>
           <!-- DOPLNIT: Krátký text o souboru (2–4 věty). Co vás spojuje, kdy jste vznikli, co děláte. -->
-          <p>Jsme ochotnický divadelní soubor s&nbsp;vášní pro příběhy a herecký výraz. Spojuje nás touha bavit publikum, odvaha zkoušet nové věci a radost ze&nbsp;společné práce na&nbsp;scéně i&nbsp;za&nbsp;ní. Divadlo Vitus vzniklo v&nbsp;[rok] a od té doby uvádíme hry napříč žánry — od komedie přes drama až po experimentální formy.</p>
+          <p>Jsme ochotnický divadelní soubor s&nbsp;vášní pro příběhy a herecký výraz. Spojuje nás touha bavit publikum, odvaha zkoušet nové věci a radost ze&nbsp;společné práce na&nbsp;scéně i&nbsp;za&nbsp;ní.</p>
         </div>
       </div>
     </section>
@@ -77,14 +86,14 @@
         <div class="plays-grid">
 
           <article class="play-card">
-            <div class="play-poster">
+            <button type="button" class="play-poster" data-lightbox-group="plays" aria-label="Zvětšit: Plakát — Mírové jednání aneb co nám Jirásek zatajil" aria-haspopup="dialog">
               <img src="images/plays/mirove_jednani.jpg" alt="Plakát — Mírové jednání aneb co nám Jirásek zatajil" loading="lazy">
-            </div>
+            </button>
             <div class="play-info">
-              <p class="play-author"><!-- DOPLNIT: Autor --></p>
+              <p class="play-author" hidden><!-- DOPLNIT: Autor --></p>
               <h3 class="play-title">Mírové jednání <span class="play-title-aneb">aneb co nám Jirásek zatajil</span></h3>
-              <p class="play-synopsis"><!-- DOPLNIT: Anotace — krátký děj (3–5 vět). Co diváky čeká, atmosféra, žánr. --></p>
-              <details class="play-details">
+              <p class="play-synopsis" hidden><!-- DOPLNIT: Anotace — krátký děj (3–5 vět). Co diváky čeká, atmosféra, žánr. --></p>
+              <details class="play-details" hidden>
                 <summary>Realizační tým</summary>
                 <dl class="play-team">
                   <dt>Režie</dt>
@@ -97,7 +106,7 @@
                   <dd><!-- DOPLNIT: Jméno --></dd>
                 </dl>
               </details>
-              <details class="play-details">
+              <details class="play-details" hidden>
                 <summary>Pro pořadatele</summary>
                 <dl class="play-tech">
                   <dt>Délka</dt>
@@ -114,14 +123,14 @@
           </article>
 
           <article class="play-card">
-            <div class="play-poster">
+            <button type="button" class="play-poster" data-lightbox-group="plays" aria-label="Zvětšit: Plakát — Soudní proces aneb nic není černobílé" aria-haspopup="dialog">
               <img src="images/plays/soudni_proces.jpg" alt="Plakát — Soudní proces aneb nic není černobílé" loading="lazy">
-            </div>
+            </button>
             <div class="play-info">
-              <p class="play-author"><!-- DOPLNIT: Autor --></p>
+              <p class="play-author" hidden><!-- DOPLNIT: Autor --></p>
               <h3 class="play-title">Soudní proces <span class="play-title-aneb">aneb nic není černobílé</span></h3>
-              <p class="play-synopsis"><!-- DOPLNIT: Anotace --></p>
-              <details class="play-details">
+              <p class="play-synopsis" hidden><!-- DOPLNIT: Anotace --></p>
+              <details class="play-details" hidden>
                 <summary>Realizační tým</summary>
                 <dl class="play-team">
                   <dt>Režie</dt><dd><!-- DOPLNIT --></dd>
@@ -130,7 +139,7 @@
                   <dt>Kostýmy</dt><dd><!-- DOPLNIT --></dd>
                 </dl>
               </details>
-              <details class="play-details">
+              <details class="play-details" hidden>
                 <summary>Pro pořadatele</summary>
                 <dl class="play-tech">
                   <dt>Délka</dt><dd><!-- DOPLNIT --></dd>
@@ -143,14 +152,14 @@
           </article>
 
           <article class="play-card">
-            <div class="play-poster">
+            <button type="button" class="play-poster" data-lightbox-group="plays" aria-label="Zvětšit: Plakát — Zločin z lásky aneb tady strážím já" aria-haspopup="dialog">
               <img src="images/plays/zlocin_z_lasky.jpg" alt="Plakát — Zločin z lásky aneb tady strážím já" loading="lazy">
-            </div>
+            </button>
             <div class="play-info">
-              <p class="play-author"><!-- DOPLNIT: Autor --></p>
-              <h3 class="play-title">Zločin z lásky <span class="play-title-aneb">aneb tady strážím, já</span></h3>
-              <p class="play-synopsis"><!-- DOPLNIT: Anotace --></p>
-              <details class="play-details">
+              <p class="play-author" hidden><!-- DOPLNIT: Autor --></p>
+              <h3 class="play-title">Zločin z lásky <span class="play-title-aneb">aneb tady strážím já</span></h3>
+              <p class="play-synopsis" hidden><!-- DOPLNIT: Anotace --></p>
+              <details class="play-details" hidden>
                 <summary>Realizační tým</summary>
                 <dl class="play-team">
                   <dt>Režie</dt><dd><!-- DOPLNIT --></dd>
@@ -159,7 +168,7 @@
                   <dt>Kostýmy</dt><dd><!-- DOPLNIT --></dd>
                 </dl>
               </details>
-              <details class="play-details">
+              <details class="play-details" hidden>
                 <summary>Pro pořadatele</summary>
                 <dl class="play-tech">
                   <dt>Délka</dt><dd><!-- DOPLNIT --></dd>
@@ -189,7 +198,7 @@
         <div class="team-groups">
 
           <!-- DOPLNIT: Jména a případně fotky herců -->
-          <div class="team-group">
+          <div class="team-group" hidden>
             <h3 class="team-group-title">Herci</h3>
             <ul class="team-list" role="list">
               <!-- Vzor s fotkou:
@@ -215,7 +224,7 @@
           </div>
 
           <!-- DOPLNIT: Technika, kostýmy, produkce, osvětlení... -->
-          <div class="team-group">
+          <div class="team-group" hidden>
             <h3 class="team-group-title">Zázemí</h3>
             <ul class="team-list" role="list">
               <li class="team-member"><span>Jméno Příjmení</span></li>
@@ -234,30 +243,27 @@
         <h2 class="section-title">Fotogalerie</h2>
         <p class="section-subtitle">Momenty ze scény i ze zákulisí</p>
 
-        <!--
-          JAK PŘIDAT SKUTEČNÉ FOTOGRAFIE:
-          1. Fotky zkomprimujte skriptem optimize-images.sh (vytvoří .webp verze)
-          2. Přidejte je do složky images/gallery/
-          3. Nahraďte div.gallery-placeholder tagem <img> takto:
-
-          <img
-            src="images/gallery/foto1.webp"
-            alt="Stručný popis momentky"
-            loading="lazy"
-            class="gallery-img"
-          >
-
-          Třídy gallery-img--tall a gallery-img--wide roztáhnou buňku na výšku/šířku:
-          <img class="gallery-img gallery-img--tall" ...>
-          <img class="gallery-img gallery-img--wide" ...>
-        -->
-        <div class="gallery-grid" role="list" aria-label="Fotogalerie">
-          <img src="images/gallery/foto-01.jpg" alt="Fotografie ze zákulisí" loading="lazy" class="gallery-img">
-          <img src="images/gallery/foto-02.jpg" alt="Fotografie ze zákulisí" loading="lazy" class="gallery-img gallery-img--wide">
-          <img src="images/gallery/foto-03.jpg" alt="Fotografie ze scény" loading="lazy" class="gallery-img">
-          <img src="images/gallery/foto-04.jpg" alt="Fotografie ze scény" loading="lazy" class="gallery-img">
-          <img src="images/gallery/foto-05.jpg" alt="Fotografie ze zákulisí" loading="lazy" class="gallery-img gallery-img--wide">
-          <img src="images/gallery/foto-06.jpg" alt="Fotografie ze scény" loading="lazy" class="gallery-img">
+        <!-- Nové fotografie vložte do tlačítka s data-lightbox-group="gallery".
+             Třídy gallery-item--wide / gallery-item--tall patří na tlačítko. -->
+        <div class="gallery-grid">
+          <button type="button" class="gallery-item" data-lightbox-group="gallery" aria-label="Zvětšit: Zkouška u stolu" aria-haspopup="dialog">
+            <img src="images/gallery/foto-01.jpg" alt="Zkouška u stolu" loading="lazy" class="gallery-img">
+          </button>
+          <button type="button" class="gallery-item gallery-item--wide" data-lightbox-group="gallery" aria-label="Zvětšit: Scéna z představení v policejních kostýmech" aria-haspopup="dialog">
+            <img src="images/gallery/foto-02.jpg" alt="Scéna z představení v policejních kostýmech" loading="lazy" class="gallery-img">
+          </button>
+          <button type="button" class="gallery-item" data-lightbox-group="gallery" aria-label="Zvětšit: Společná fotografie na jevišti" aria-haspopup="dialog">
+            <img src="images/gallery/foto-03.jpg" alt="Společná fotografie na jevišti" loading="lazy" class="gallery-img">
+          </button>
+          <button type="button" class="gallery-item" data-lightbox-group="gallery" aria-label="Zvětšit: Setkání souboru v zákulisí" aria-haspopup="dialog">
+            <img src="images/gallery/foto-04.jpg" alt="Setkání souboru v zákulisí" loading="lazy" class="gallery-img">
+          </button>
+          <button type="button" class="gallery-item gallery-item--wide" data-lightbox-group="gallery" aria-label="Zvětšit: Mírové jednání na jevišti" aria-haspopup="dialog">
+            <img src="images/gallery/foto-05.jpg" alt="Mírové jednání na jevišti" loading="lazy" class="gallery-img">
+          </button>
+          <button type="button" class="gallery-item" data-lightbox-group="gallery" aria-label="Zvětšit: Dvojice herců v historických kostýmech" aria-haspopup="dialog">
+            <img src="images/gallery/foto-06.jpg" alt="Dvojice herců v historických kostýmech" loading="lazy" class="gallery-img">
+          </button>
         </div>
 
       </div><!-- /.container -->
@@ -271,12 +277,10 @@
         <div class="contact-grid">
 
           <div class="contact-block">
-            <h3>Vedení souboru</h3>
+            <h3>Napište nám</h3>
             <address>
               <!-- DOPLNIT: Jméno a telefon vedoucího souboru -->
-              <p><strong>Jméno Příjmení</strong> — vedoucí souboru</p>
               <p><a href="mailto:divadlovitus@seznam.cz">divadlovitus@seznam.cz</a></p>
-              <p><a href="tel:+420000000000">+420 000 000 000</a></p>
             </address>
           </div>
 
@@ -301,7 +305,7 @@
                 </svg>
                 Facebook
               </a>
-              <a href="#" class="social-link" aria-label="Instagram divadla Vitus">
+              <a href="#" hidden class="social-link" aria-label="Instagram divadla Vitus">
                 <!-- Instagram ikona -->
                 <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="currentColor">
                   <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/>
@@ -313,7 +317,7 @@
 
           <!-- DOPLNIT: Fakturační údaje (pokud soubor funguje pod IČO/spolkem) -->
           <!-- Pokud nemáte IČO, celý tento blok smažte -->
-          <div class="contact-block">
+          <div class="contact-block" hidden>
             <h3>Fakturační údaje</h3>
             <address>
               <p><!-- DOPLNIT: Název spolku / občanského sdružení --></p>
@@ -345,12 +349,13 @@
   </footer>
 
   <!-- ===================== LIGHTBOX ===================== -->
-  <div id="lightbox" class="lightbox" role="dialog" aria-modal="true" aria-label="Zobrazení fotografie" hidden>
+  <div id="lightbox" class="lightbox" role="dialog" aria-modal="true" aria-label="Zvětšený obrázek" hidden>
     <button class="lightbox-close" aria-label="Zavřít">&times;</button>
     <button class="lightbox-prev" aria-label="Předchozí fotografie">&#8249;</button>
     <button class="lightbox-next" aria-label="Další fotografie">&#8250;</button>
     <div class="lightbox-content">
-      <img src="" alt="" class="lightbox-img">
+      <img alt="" class="lightbox-img">
+      <p class="lightbox-caption" aria-live="polite"></p>
     </div>
   </div>
 

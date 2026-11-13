@@ -43,7 +43,7 @@ body {
   background-color: var(--color-bg);
   color: var(--color-text);
   font-family: var(--font-body);
-  font-weight: 300;
+  font-weight: 400;
   line-height: 1.75;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -54,6 +54,11 @@ img {
   height: auto;
   display: block;
 }
+
+[hidden] { display: none !important; }
+
+button { font: inherit; }
+button:focus-visible { outline: 3px solid var(--color-accent); outline-offset: 3px; }
 
 a {
   color: var(--color-accent);
@@ -159,6 +164,8 @@ address { font-style: normal; }
   display: flex;
   align-items: center;
   text-decoration: none;
+  font-family: var(--font-heading);
+  font-size: 1.5rem;
   transition: opacity var(--transition-fast);
 }
 
@@ -205,7 +212,11 @@ address { font-style: normal; }
   background: none;
   border: none;
   cursor: pointer;
-  padding: 6px;
+  padding: 9px;
+  min-width: 44px;
+  min-height: 44px;
+  justify-content: center;
+  align-items: center;
 }
 
 .nav-toggle span {
@@ -224,7 +235,8 @@ address { font-style: normal; }
 /* ===== HERO SEKCE ===== */
 .section-hero {
   position: relative;
-  min-height: 100svh;
+  min-height: min(760px, 85svh);
+  padding-top: var(--nav-height);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -279,6 +291,7 @@ address { font-style: normal; }
   z-index: 1;
   padding: 2rem 1.5rem;
   max-width: 720px;
+  mix-blend-mode: screen;
 }
 
 .hero-eyebrow {
@@ -308,25 +321,31 @@ address { font-style: normal; }
   letter-spacing: 0.04em;
 }
 
-/* Logo v hero sekci — bílý podklad, zlatý rámeček */
+/* Bílé logo splývá s tmavým pozadím. */
 .hero-logo-box {
   display: inline-block;
-  background: #ffffff;
-  border: 3px solid var(--color-accent);
-  padding: 1.25rem 2rem;
-  margin-bottom: 2.5rem;
+  margin-bottom: 1rem;
 }
 
 .hero-logo-box img {
-  height: 160px;
+  height: 80px;
   width: auto;
   display: block;
+  filter: invert(1);
+  mix-blend-mode: screen;
 }
 
 @media (max-width: 480px) {
-  .hero-logo-box img { height: 110px; }
-  .hero-logo-box { padding: 1rem 1.5rem; margin-bottom: 2rem; }
+  .hero-logo-box img { height: 64px; }
 }
+
+.hero-actions { display: flex; flex-direction: column; align-items: center; gap: 1rem; }
+.hero-secondary { color: var(--color-text); text-decoration: underline; text-underline-offset: 5px; }
+.section-program { padding-block: 2rem; background: var(--color-surface); border-block: 1px solid var(--color-border); }
+.program-content { display: flex; align-items: center; justify-content: space-between; gap: 2rem; }
+.program-content h2 { font-family: var(--font-heading); font-size: 1.6rem; line-height: 1.3; margin-bottom: 0.5rem; }
+.program-content p { color: var(--color-text-muted); }
+.program-content .btn-primary { flex-shrink: 0; text-align: center; }
 
 /* ===== O NÁS (stručně) ===== */
 .section-about {
@@ -337,7 +356,7 @@ address { font-style: normal; }
 .about-content {
   max-width: 760px;
   margin-inline: auto;
-  text-align: center;
+  text-align: left;
 }
 
 .about-content .section-title {
@@ -358,18 +377,6 @@ address { font-style: normal; }
   font-size: 1.1rem;
   color: var(--color-text-muted);
   line-height: 1.95;
-}
-
-/* Velké první písmeno (drop cap) */
-.about-content p::first-letter {
-  font-family: var(--font-heading);
-  font-size: 3.8rem;
-  font-weight: 700;
-  color: var(--color-accent);
-  float: left;
-  line-height: 0.78;
-  margin-right: 0.08em;
-  margin-top: 0.08em;
 }
 
 /* ===== REPERTOÁR ===== */
@@ -398,6 +405,11 @@ address { font-style: normal; }
 }
 
 .play-poster {
+  display: block;
+  width: 100%;
+  border: 0;
+  padding: 0.75rem;
+  cursor: zoom-in;
   aspect-ratio: 3 / 4;
   overflow: hidden;
   background: #111;
@@ -406,12 +418,12 @@ address { font-style: normal; }
 .play-poster img {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
   transition: transform 0.5s ease;
 }
 
 .play-card:hover .play-poster img {
-  transform: scale(1.05);
+  transform: scale(1.02);
 }
 
 .play-poster-placeholder {
@@ -541,9 +553,7 @@ address { font-style: normal; }
 
 .team-photo {
   width: 100%;
-  height: 480px;
-  object-fit: cover;
-  object-position: center 25%;
+  height: auto;
   display: block;
 }
 
@@ -567,6 +577,8 @@ address { font-style: normal; }
   grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
   gap: 2.5rem 3rem;
 }
+
+.team-groups > .team-group { max-width: 360px; }
 
 .team-group-title {
   font-family: var(--font-heading);
@@ -629,6 +641,19 @@ address { font-style: normal; }
   transition: opacity var(--transition-fast), transform var(--transition-med);
 }
 
+.gallery-item {
+  display: block;
+  min-width: 0;
+  border: 0;
+  padding: 0;
+  overflow: hidden;
+  background: var(--color-bg);
+  cursor: zoom-in;
+}
+.gallery-item--wide { grid-column: span 2; }
+.gallery-item--tall { grid-row: span 2; }
+.gallery-item:hover .gallery-img { opacity: 0.85; transform: scale(1.02); }
+
 .gallery-img:hover { opacity: 0.82; transform: scale(1.02); }
 .gallery-img:focus-visible { outline: 3px solid var(--color-accent); outline-offset: -3px; }
 
@@ -660,6 +685,7 @@ address { font-style: normal; }
 .lightbox-content {
   position: relative;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   max-width: 90vw;
@@ -668,15 +694,18 @@ address { font-style: normal; }
 
 .lightbox-img {
   max-width: 90vw;
-  max-height: 88vh;
+  max-height: calc(100svh - 160px);
   object-fit: contain;
   display: block;
 }
+
+.lightbox-caption { color: var(--color-text); font-size: 0.95rem; text-align: center; margin-top: 0.75rem; max-width: 70ch; }
 
 .lightbox-close,
 .lightbox-prev,
 .lightbox-next {
   position: fixed;
+  z-index: 1;
   background: rgba(0, 0, 0, 0.55);
   border: 1px solid rgba(255, 255, 255, 0.12);
   color: var(--color-text);
@@ -753,7 +782,7 @@ address { font-style: normal; }
 .contact-block address p {
   margin-bottom: 0.4rem;
   color: var(--color-text-muted);
-  font-size: 0.92rem;
+  font-size: 1rem;
 }
 
 .contact-block address strong {
@@ -872,13 +901,17 @@ address { font-style: normal; }
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
     padding-block: 0.5rem;
-    transform: translateY(-110%);
-    transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    visibility: hidden;
+    opacity: 0;
+    transform: translateY(-0.5rem);
+    transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s;
     border-bottom: 1px solid var(--color-border);
     pointer-events: none;
   }
 
   .nav-menu.is-open {
+    visibility: visible;
+    opacity: 1;
     transform: translateY(0);
     pointer-events: auto;
   }
@@ -895,6 +928,9 @@ address { font-style: normal; }
 
   /* Hero */
   .hero-title { font-size: clamp(2.8rem, 12vw, 4.5rem); }
+  .section-hero { min-height: 620px; min-height: min(680px, 90svh); }
+  .hero-content { padding-block: 2.5rem; }
+  .program-content { flex-direction: column; align-items: flex-start; gap: 1.25rem; }
 
   /* Hry */
   .plays-grid { grid-template-columns: 1fr; }
@@ -938,6 +974,14 @@ body.coming-soon footer {
 
 body.coming-soon .btn-primary {
   display: none;
+}
+
+body.coming-soon .hero-actions { display: none; }
+body.coming-soon .section-hero { min-height: 100svh; }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { transition: none !important; }
 }
 
 body.coming-soon .hero-coming-soon {

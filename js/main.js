@@ -4,13 +4,13 @@
    Divadlo Vitus — hlavní JavaScript
    - Mobilní menu (hamburger)
    - Zvýraznění aktivní sekce v navigaci
-   - Lightbox pro fotogalerii
+   - Lightbox pro fotogalerii a plakáty
    ===================================================== */
 
 // ─── KONFIGURACE ─────────────────────────────────────────────────────────────
 
 const CONFIG = {
-  comingSoon: true,  // true = zobrazit pouze hero + „Stránky se připravují..."
+  comingSoon: false, // true = zobrazit pouze hero + „Stránky se připravují..."
 };
 
 if (CONFIG.comingSoon) {
@@ -23,21 +23,33 @@ const siteHeader = document.getElementById('site-header');
 const navToggle  = document.querySelector('.nav-toggle');
 const navMenu    = document.querySelector('.nav-menu');
 
+function setMenuOpen(isOpen) {
+  navToggle.setAttribute('aria-expanded', String(isOpen));
+  navToggle.setAttribute('aria-label', isOpen ? 'Zavřít menu' : 'Otevřít menu');
+  navToggle.classList.toggle('is-open', isOpen);
+  navMenu.classList.toggle('is-open', isOpen);
+}
+
 navToggle.addEventListener('click', () => {
-  const isOpen = navToggle.getAttribute('aria-expanded') === 'true';
-  navToggle.setAttribute('aria-expanded', String(!isOpen));
-  navToggle.classList.toggle('is-open', !isOpen);
-  navMenu.classList.toggle('is-open', !isOpen);
+  setMenuOpen(navToggle.getAttribute('aria-expanded') !== 'true');
 });
 
-// Zavřít menu klikem na odkaz
 navMenu.querySelectorAll('a').forEach(link => {
-  link.addEventListener('click', () => {
-    navToggle.setAttribute('aria-expanded', 'false');
-    navToggle.classList.remove('is-open');
-    navMenu.classList.remove('is-open');
-  });
+  link.addEventListener('click', () => setMenuOpen(false));
 });
+
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape' && navToggle.getAttribute('aria-expanded') === 'true') {
+    setMenuOpen(false);
+    navToggle.focus();
+  }
+});
+
+document.addEventListener('click', e => {
+  if (!siteHeader.contains(e.target)) setMenuOpen(false);
+});
+
+window.matchMedia('(max-width: 768px)').addEventListener('change', () => setMenuOpen(false));
 
 // ─── SCROLL — stav headeru a aktivní odkaz ───────────────────────────────────
 
@@ -74,74 +86,82 @@ const lightboxImg   = lightbox.querySelector('.lightbox-img');
 const lightboxClose = lightbox.querySelector('.lightbox-close');
 const lightboxPrev  = lightbox.querySelector('.lightbox-prev');
 const lightboxNext  = lightbox.querySelector('.lightbox-next');
-const galleryGrid   = document.querySelector('.gallery-grid');
+const lightboxCaption = lightbox.querySelector('.lightbox-caption');
+const imageTriggers = Array.from(document.querySelectorAll('[data-lightbox-group]'));
+const pageRegions = document.querySelectorAll('body > header, body > main, body > footer, body > .skip-link');
 
-let galleryImages = [];
-let currentIndex  = 0;
+let currentImages = [];
+let currentIndex = 0;
+let lightboxOpener = null;
+let previousOverflow = '';
 
-function collectImages() {
-  galleryImages = Array.from(galleryGrid.querySelectorAll('.gallery-img'));
-}
-
-function openLightbox(index) {
-  collectImages();
-  if (!galleryImages.length) return;
-  currentIndex = index;
-  const img = galleryImages[currentIndex];
-  // data-full umožňuje zobrazit větší verzi než je thumbnail
+function showImage(index) {
+  currentIndex = (index + currentImages.length) % currentImages.length;
+  const img = currentImages[currentIndex].querySelector('img');
   lightboxImg.src = img.dataset.full ?? img.src;
   lightboxImg.alt = img.alt;
-  lightbox.hidden = false;
-  document.body.style.overflow = 'hidden';
-  lightboxClose.focus();
-  refreshNavButtons();
-}
-
-function closeLightbox() {
-  lightbox.hidden = true;
-  document.body.style.overflow = '';
-  // Vrátit focus na obrázek, který lightbox otevřel
-  galleryImages[currentIndex]?.focus();
-}
-
-function showPrev() {
-  openLightbox((currentIndex - 1 + galleryImages.length) % galleryImages.length);
-}
-
-function showNext() {
-  openLightbox((currentIndex + 1) % galleryImages.length);
-}
-
-function refreshNavButtons() {
-  const multiple = galleryImages.length > 1;
+  lightboxCaption.textContent = `${img.alt} · ${currentIndex + 1} / ${currentImages.length}`;
+  const multiple = currentImages.length > 1;
   lightboxPrev.hidden = !multiple;
   lightboxNext.hidden = !multiple;
 }
 
-// Klik na obrázek v galerii
-galleryGrid.addEventListener('click', e => {
-  const img = e.target.closest('.gallery-img');
-  if (!img) return;
-  collectImages();
-  openLightbox(galleryImages.indexOf(img));
+function openLightbox(trigger) {
+  currentImages = imageTriggers.filter(item => item.dataset.lightboxGroup === trigger.dataset.lightboxGroup);
+  lightboxOpener = trigger;
+  previousOverflow = document.body.style.overflow;
+  showImage(currentImages.indexOf(trigger));
+  lightbox.hidden = false;
+  document.body.style.overflow = 'hidden';
+  pageRegions.forEach(region => { region.inert = true; });
+  lightboxClose.focus();
+}
+
+function closeLightbox() {
+  lightbox.hidden = true;
+  document.body.style.overflow = previousOverflow;
+  pageRegions.forEach(region => { region.inert = false; });
+  lightboxOpener?.focus({ preventScroll: true });
+}
+
+imageTriggers.forEach(trigger => {
+  trigger.addEventListener('click', () => openLightbox(trigger));
 });
 
-// Ovládání lightboxu
 lightboxClose.addEventListener('click', closeLightbox);
-lightboxPrev.addEventListener('click', showPrev);
-lightboxNext.addEventListener('click', showNext);
-
-// Klik mimo obrázek zavře lightbox
+lightboxPrev.addEventListener('click', () => showImage(currentIndex - 1));
+lightboxNext.addEventListener('click', () => showImage(currentIndex + 1));
 lightbox.addEventListener('click', e => {
   if (e.target === lightbox) closeLightbox();
 });
 
-// Klávesnice
 document.addEventListener('keydown', e => {
   if (lightbox.hidden) return;
   switch (e.key) {
-    case 'Escape':    closeLightbox(); break;
-    case 'ArrowLeft': showPrev();      break;
-    case 'ArrowRight':showNext();      break;
+    case 'Escape':
+      e.preventDefault();
+      closeLightbox();
+      break;
+    case 'ArrowLeft':
+      e.preventDefault();
+      showImage(currentIndex - 1);
+      break;
+    case 'ArrowRight':
+      e.preventDefault();
+      showImage(currentIndex + 1);
+      break;
+    case 'Tab': {
+      const buttons = Array.from(lightbox.querySelectorAll('button')).filter(button => !button.hidden);
+      const first = buttons[0];
+      const last = buttons[buttons.length - 1];
+      if (e.shiftKey && document.activeElement === first) {
+        e.preventDefault();
+        last.focus();
+      } else if (!e.shiftKey && document.activeElement === last) {
+        e.preventDefault();
+        first.focus();
+      }
+      break;
+    }
   }
 });
